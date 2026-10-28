@@ -60,7 +60,7 @@ matchAgents(inv, threatcrushServers);   // { devices: [{ device, agents: [...] }
 
 ### Observation rules
 
-Only what anyone could see without the device's credentials, and only for devices you run. Private addresses (RFC 1918, CGNAT, link-local, ULA) are never probed. Client profiles (desktop, phone, tablet) are not network-probed.
+Only what anyone could see without the device's credentials, and only for devices you run.  A device the observer runs on is marked `from_self` and not port-scanned: from inside, loopback skips the firewall. Observe each box from another one. Private addresses (RFC 1918, CGNAT, link-local, ULA) are never probed. Client profiles (desktop, phone, tablet) are not network-probed.
 
 ## License
 

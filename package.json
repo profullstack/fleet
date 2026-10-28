@@ -1,6 +1,6 @@
 {
   "name": "@profullstack/fleet",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Read an OpenDevice inventory (servers, desktops, phones, tablets), add up what the fleet costs a month, observe each box's public metadata, and export the costs for CoinPay. Used by ThreatCrush and w3bs.org/fleet.",
   "keywords": ["fleet", "opendevice", "openserver", "inventory", "hosting", "cost", "coinpay", "threatcrush", "w3bs"],

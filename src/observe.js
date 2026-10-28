@@ -7,6 +7,7 @@
 // Only observe devices you run. Node-only.
 import { promises as dns } from 'node:dns';
 import net from 'node:net';
+import { networkInterfaces } from 'node:os';
 import tls from 'node:tls';
 
 export const PORTS = [22, 25, 53, 80, 443, 465, 587, 993, 2202, 3000, 5432, 6379, 8080, 8443];
@@ -25,6 +26,13 @@ function timeout(ms) {
 }
 
 const race = (p, ms) => Promise.race([p, timeout(ms)]);
+
+// Addresses of the machine running the observer. Probing one of these goes over
+// loopback and skips the firewall, so open ports would be reported that the
+// internet cannot reach.
+export function localAddresses() {
+  return new Set(Object.values(networkInterfaces()).flat().filter(Boolean).map((i) => i.address.toLowerCase()));
+}
 
 function isPrivate(ip) {
   if (net.isIPv4(ip)) {
@@ -128,10 +136,14 @@ export async function observe(device, { timeoutMs = 4000, ports = PORTS, now = (
   if (!publicIps.length) return out;
   const target = [...a].find((ip) => !isPrivate(ip)) ?? publicIps[0];
 
+  const self = publicIps.some((ip) => localAddresses().has(ip.toLowerCase()));
+  if (self) out.from_self = true;
+
   out.ptr = [];
   for (const ip of publicIps) for (const n of (await settle(race(dns.reverse(ip), timeoutMs), [])) ?? []) out.ptr.includes(n) || out.ptr.push(n);
   out.asn = await settle(race(asnOf(target), timeoutMs));
 
+  if (self) return out; // ports, banners and TLS would be seen from inside; observe from another box
   const open = await Promise.all(ports.map((p) => portOpen(target, p, timeoutMs).then((ok) => (ok ? p : null))));
   out.ports = open.filter((p) => p != null);
 

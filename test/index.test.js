@@ -93,3 +93,12 @@ test('matchAgents joins by hostname, name or ip and keeps devices without agents
   assert.deepEqual(m.devices.find((d) => d.device.id === 'eu1').agents, []);
   assert.deepEqual(m.unmatched.map((a) => a.id), ['s2']);
 });
+
+test('observe never port-scans the machine it runs on', async () => {
+  const { observe, localAddresses } = await import('../src/observe.js');
+  const mine = [...localAddresses()].find((a) => /^\d+\.\d+\.\d+\.\d+$/.test(a) && !a.startsWith('127.') && !a.startsWith('10.') && !a.startsWith('192.168.') && !a.startsWith('172.'));
+  if (!mine) return; // no public IPv4 on this box
+  const o = await observe({ id: 'self', hostnames: [], addresses: { ipv4: [mine], ipv6: [] } }, { timeoutMs: 500 });
+  assert.equal(o.from_self, true);
+  assert.equal(o.ports, undefined);
+});

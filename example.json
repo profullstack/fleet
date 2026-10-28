@@ -1,0 +1,23 @@
+{
+  "operator": { "name": "Northwind Labs", "web": "https://northwind.example" },
+  "updated": "2026-10-28T06:00:00Z",
+  "currency": "USD",
+  "devices": [
+    {
+      "id": "app1", "name": "app1", "profile": "server", "role": "shared app box",
+      "hostnames": ["app1.northwind.example"], "addresses": { "ipv4": ["203.0.113.10"] },
+      "provider": { "name": "Example Racks", "offer": { "descriptor": "https://racks.example/.well-known/openserver.json", "id": "dedi-epyc-16" } },
+      "cost": { "amount": 149, "interval": "month", "payee": "RACKS EXAMPLE", "paid_with": "paypal", "since": "2026-09-17" }
+    },
+    {
+      "id": "eu1", "name": "eu1", "hostnames": ["eu1.northwind.example"],
+      "provider": { "name": "Euro VPS" },
+      "cost": { "amount": 120, "currency": "EUR", "interval": "year" }
+    },
+    { "id": "ops-phone", "name": "On-call phone", "profile": "phone", "vendor": "Google", "model": "Pixel 9",
+      "os": { "name": "Android", "version": "17", "patch": "2026-10-05" },
+      "cost": { "amount": 25, "interval": "month", "payee": "CARRIER EXAMPLE" } },
+    { "id": "design-laptop", "name": "Design laptop", "profile": "desktop", "form": "laptop",
+      "cost": { "amount": 1440, "interval": "once", "amortize_months": 36, "since": "2026-01-10" } }
+  ]
+}

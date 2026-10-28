@@ -1,0 +1,24 @@
+{
+  "name": "@profullstack/fleet",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Read an OpenDevice inventory (servers, desktops, phones, tablets), add up what the fleet costs a month, observe each box's public metadata, and export the costs for CoinPay. Used by ThreatCrush and w3bs.org/fleet.",
+  "keywords": ["fleet", "opendevice", "openserver", "inventory", "hosting", "cost", "coinpay", "threatcrush", "w3bs"],
+  "repository": { "type": "git", "url": "git+https://github.com/profullstack/fleet.git" },
+  "homepage": "https://logicsrc.com/opendevice",
+  "bugs": { "url": "https://github.com/profullstack/fleet/issues" },
+  "license": "MIT",
+  "author": "Profullstack, Inc.",
+  "exports": {
+    ".": { "types": "./index.d.ts", "import": "./src/index.js" },
+    "./observe": { "types": "./observe.d.ts", "import": "./src/observe.js" },
+    "./package.json": "./package.json"
+  },
+  "bin": { "fleet": "bin/fleet.js" },
+  "files": ["src", "bin", "index.d.ts", "observe.d.ts", "example.json", "README.md", "LICENSE"],
+  "sideEffects": false,
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test"
+  }
+}
